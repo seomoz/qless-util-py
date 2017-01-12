@@ -9,6 +9,40 @@ qless-util-py
 
 Here are some optional utilities helpful when using `qless-py`.
 
+Jobs
+====
+
+`SubprocessJob`
+---------------
+This job class invokes a subcommand with arguments, run from a sandbox directory. In the
+event that the job lock is lost, the subprocess is forcibly killed. In the event that the
+subprocess exits with a non-zero status code, the job is failed and the last 1K of
+`stderr` and `stdout` are reported as the failure message.
+
+__NOTE: Because this allows a job to run an arbitrary command on a system, extreme care
+should be taken. The process running `qless-py-worker` should be a service user (with
+limited permissions outside the work directory and no shell access).__
+
+The data is expected to be of the form:
+
+```json
+{
+    "command": "...",
+    "args": ["...", "...", ...]
+}
+```
+
+To enqueue such a job:
+
+```python
+from qless_util.jobs import SubprocessJob
+
+client.queues['queue'].put(SubprocessJob, {
+    'command': 'bash',
+    'args': ['-c', 'echo hello']
+})
+```
+
 Development
 ===========
 
