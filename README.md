@@ -16,8 +16,11 @@ Jobs
 ---------------
 This job class invokes a subcommand with arguments, run from a sandbox directory. In the
 event that the job lock is lost, the subprocess is forcibly killed. In the event that the
-subprocess exits with a non-zero status code, the job is failed and the last 1K of
-`stderr` and `stdout` are reported as the failure message.
+subprocess exits with a non-zero status code, the job is retried and the last 1K of
+`stderr` and `stdout` are reported as the failure message. To not automatically retry jobs
+whose subprocess has failed, use the option `"retry": false` in the job data. When in
+retry mode, an optional `"delay"` field can be provided in the job data, indicating the
+retry delay (in seconds).
 
 __NOTE: Because this allows a job to run an arbitrary command on a system, extreme care
 should be taken. The process running `qless-py-worker` should be a service user (with
@@ -28,7 +31,9 @@ The data is expected to be of the form:
 ```json
 {
     "command": "...",
-    "args": ["...", "...", ...]
+    "args": ["...", "...", ...],
+    # This is optional -- when present, should be false or true
+    "retry": false
 }
 ```
 

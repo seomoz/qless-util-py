@@ -37,7 +37,10 @@ class SubprocessJob(object):
                         'Stderr (last 1k): %s' % stderr[-1000:],
                         'Stdout (last 1k): %s' % stdout[-1000:]
                     ])
-                    job.fail(group, message)
+                    if job.data.get('retry', True):
+                        job.retry(job.data.get('delay', 0), group, message)
+                    else:
+                        job.fail(group, message)
                 else:
                     job.complete()
             finally:
