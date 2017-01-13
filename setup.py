@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name                 = 'qless-util',
-    version              = '0.1.0',
+    version              = '0.1.1',
     description          = 'Qless utilities',
     long_description     = '''Utilities for qless.''',
     url                  = 'http://github.com/seomoz/qless-util-py',
