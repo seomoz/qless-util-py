@@ -23,6 +23,7 @@ setup(
     install_requires     = [
         'decorator',
         'hiredis',
+        'qless-py>=0.11.4',
         'redis',
         'six',
         'simplejson'
