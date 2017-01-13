@@ -1,0 +1,16 @@
+# Binaries and build artifacts
+*.pyc
+*.o
+*.so
+build/
+dist/
+qless_util.egg-info/
+
+# Dev artifacts
+venv*
+
+# Coverage
+.coverage
+
+# Vagrant
+.vagrant/
